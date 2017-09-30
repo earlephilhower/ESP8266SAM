@@ -1393,7 +1393,7 @@ pos48644:
 //if (debug) printf("phoneme %d (%c%c) length %d\n", X, signInputTable1[phonemeindex[X]], signInputTable2[phonemeindex[X]], phonemeLength[X]);
 //if (debug) printf("phoneme %d (%c%c) length %d\n", X-1, signInputTable1[phonemeindex[X-1]], signInputTable2[phonemeindex[X-1]], phonemeLength[X-1]);
 // X gets overwritten, so hold prior X value for debug statement
-int debugX = X;
+//int debugX = X;
             // shorten the prior phoneme length to (length/2 + 1)
             phonemeLength[X] = (phonemeLength[X] >> 1) + 1;
             X = loopIndex;

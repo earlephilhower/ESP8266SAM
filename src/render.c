@@ -70,7 +70,7 @@ extern void *outcbdata;
 void Output(int index, unsigned char A)
 {
 	static unsigned oldtimetableindex = 0;
-	int k;
+	//int k;
 //static FILE *raw = NULL;
 //if (!raw) raw = fopen("raw.bin", "wb");
 static unsigned char lastA = 0;
