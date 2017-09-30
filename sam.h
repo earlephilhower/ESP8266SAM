@@ -10,9 +10,9 @@ void SetSpeed(unsigned char _speed);
 void SetPitch(unsigned char _pitch);
 void SetMouth(unsigned char _mouth);
 void SetThroat(unsigned char _throat);
-void EnableSingmode();
+void EnableSingmode(int x);
 
-int SAMMain();
+int SAMMain( void (*cb)(void *, unsigned char), void *cbdata );
 
 int GetBufferLength();
 

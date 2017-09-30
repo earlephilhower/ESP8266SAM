@@ -64,7 +64,8 @@ unsigned char timetable[5][5] =
 	{199, 0, 0, 54, 54}
 };
 
-extern void OutByte(unsigned char b);
+extern void (*outcb)(void *, unsigned char);
+extern void *outcbdata;
 
 void Output(int index, unsigned char A)
 {
@@ -76,7 +77,7 @@ static unsigned char lastA = 0;
 int newbufferpos =  bufferpos + timetable[oldtimetableindex][index];
 int bp0 = bufferpos / 50;
 int bp1 = newbufferpos / 50;
-for (int i=bp0; i<bp1; i++) OutByte((lastA&15)*16); //fputc((lastA&15)*16, raw);
+for (int i=bp0; i<bp1; i++) outcb(outcbdata, (lastA&15)*16); //fputc((lastA&15)*16, raw);
 lastA = A;
 	bufferpos += timetable[oldtimetableindex][index];
 	oldtimetableindex = index;
@@ -448,6 +449,7 @@ do
 	} while(phase2 != 0);
 	mem44++;
 } while(mem44 != 0);
+yield();
 // -------------------
 //pos47694:
 
@@ -733,7 +735,7 @@ do
 		mem44++;
 		X = mem44;
 	}  //while No. 1
-
+  yield();
 	//goto pos47701;
 	//pos47970:
 
@@ -783,6 +785,7 @@ do
 	mem44 = A;
 	X = A;
 	mem38 = A - (A>>2);     // 3/4*A ???
+yield();
 
 // PROCESS THE FRAMES
 //

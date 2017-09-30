@@ -1,17 +1,17 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <string.h>
+//#include <stdlib.h>
 //#include "debug.h"
 #include "sam.h"
 #include "render.h"
 #include "SamTabs.h"
 
-char input[256]; //tab39445
+static char input[256]; //tab39445
 //standard sam sound
 unsigned char speed = 72;
 unsigned char pitch = 64;
-unsigned char mouth = 128;
-unsigned char throat = 128;
+static unsigned char mouth = 128;
+static unsigned char throat = 128;
 int singmode = 0;
 
 //extern int debug;
@@ -27,11 +27,11 @@ unsigned char mem56;
 
 unsigned char mem59=0;
 
-unsigned char A, X, Y;
+static unsigned char A, X, Y;
 
-unsigned char stress[256]; //numbers from 0 to 8
-unsigned char phonemeLength[256]; //tab40160
-unsigned char phonemeindex[256];
+static unsigned char stress[256]; //numbers from 0 to 8
+static unsigned char phonemeLength[256]; //tab40160
+static unsigned char phonemeindex[256];
 
 unsigned char phonemeIndexOutput[60]; //tab47296
 unsigned char stressOutput[60]; //tab47365
@@ -59,7 +59,7 @@ void SetSpeed(unsigned char _speed) {speed = _speed;};
 void SetPitch(unsigned char _pitch) {pitch = _pitch;};
 void SetMouth(unsigned char _mouth) {mouth = _mouth;};
 void SetThroat(unsigned char _throat) {throat = _throat;};
-void EnableSingmode() {singmode = 1;};
+void EnableSingmode(int x) {singmode = x;};
 //char* GetBuffer(){return buffer;};
 int GetBufferLength(){return bufferpos;};
 
@@ -134,9 +134,14 @@ void Init()
 }
 
 
+void (*outcb)(void *, unsigned char) = NULL;
+void *outcbdata = NULL;
+
 //int Code39771()
-int SAMMain()
+int SAMMain( void (*cb)(void *, unsigned char), void *cbd )
 {
+  outcb = cb;
+  outcbdata = cbd;
 	Init();
 	phonemeindex[255] = 32; //to prevent buffer overflow
 
