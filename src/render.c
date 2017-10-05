@@ -375,7 +375,6 @@ void Render()
 	unsigned char speedcounter; //mem45
 	unsigned char mem48;
 	int i;
-	int carry;
 	if (phonemeIndexOutput[0] == 255) return; //exit if no data
 
 	A = 0;
@@ -817,15 +816,16 @@ yield();
 		} else
 		{
             // simulate the glottal pulse and formants
-			mem56 = multtable[pgm_read_byte(sinus+phase1) /*sinus[phase1]*/ | amplitude1[Y]];
-
-			carry = 0;
-			if ((mem56+multtable[pgm_read_byte(sinus + phase2)/*sinus[phase2]*/ | amplitude2[Y]] ) > 255) carry = 1;
-			mem56 += multtable[pgm_read_byte(sinus+phase2)/*sinus[phase2]*/ | amplitude2[Y]];
-			A = mem56 + multtable[pgm_read_byte(rectangle+phase3)/*rectangle[phase3]*/ | amplitude3[Y]] + (carry?1:0);
-			A = ((A + 136) & 255) >> 4; //there must be also a carry
-			//mem[54296] = A;
-
+			signed char sp1 = (signed char)pgm_read_byte(&sinus[phase1]);
+			signed char sp2 = (signed char)pgm_read_byte(&sinus[phase2]);
+			signed char rp3 = (signed char)pgm_read_byte(&rectangle[phase3]);
+			signed int sin1 = sp1 * ((unsigned char)amplitude1[Y] & 0x0f);
+			signed int sin2 = sp2 * ((unsigned char)amplitude2[Y] & 0x0f);
+			signed int rect = rp3 * ((unsigned char)amplitude3[Y] & 0x0f);
+			signed int mux = sin1 + sin2 + rect;
+			mux /= 32;
+			mux += 128; // Go from signed to unsigned amplitude
+			A = (mux>>4) & 0x0f;
 			// output the accumulated value
 			Output(0, A);
 			speedcounter--;
