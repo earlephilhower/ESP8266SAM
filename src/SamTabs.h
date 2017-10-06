@@ -2,6 +2,11 @@
 #define SAMTABS_H
 
 #include <pgmspace.h>
+#include "debug.h"
+#include "debug.h"
+#if debug
+  #define PROGMEM
+#endif
 
 //tab40672
 unsigned char stressInputTable[] PROGMEM =

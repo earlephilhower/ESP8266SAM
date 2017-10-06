@@ -1,9 +1,11 @@
 # ESP8266SAM
 Speech synthesis for ESP8266 using ported SAM code
 
-This is a port and wrapper of the reverse-engineered speech synthesizer Software Automatic Mouth (SAM).  Utilize it with the ESP8266Audio library ( https://github.com/earlephilhower/ESP8266Audio/ ) to have your ESP8266 speak via a DAC or a direct-drive speaker.  No web services are required, everything from text parsing to speech generation is done directly on the ESP8266.
+This is a port, wrapper, and update of the reverse-engineered speech synthesizer Software Automatic Mouth (SAM).  Utilize it with the ESP8266Audio library ( https://github.com/earlephilhower/ESP8266Audio/ ) to have your ESP8266 speak via a DAC or a direct-drive speaker.  No web services are required, everything from text parsing to speech generation is done directly on the ESP8266.
 
 Original sources:  https://github.com/s-macke/SAM
+
+This version has been reworked to generate 8-bit speech formants as well as proper time-series waveforms.  A pull request has been sent with these changes to the original repo.
 
 ## Usage
 You will need:
@@ -17,7 +19,7 @@ SAM is a very basic speech synthesizer originally developed in 1979 and ported t
 
 The quality of speech isn't phenomenal.  To paraphrase Samuel Johnson, "It is not done well; but you are surprised to find it done at all."  The same could be said of the decompiled, disassembled, C-translated source code.
 
-All the samples and waveform generation internally are *4-bit* (yes, 16 levels, not 16-bits) because the SID chip in the C64 only had 16 volume levels.  Output is fixed at 22050Hz due to some hardcoded delays to help match C64 internal timing parameters.
+Output is fixed at 22050Hz due to some hardcoded delays to help match C64 internal timing parameters.
 
 The voice is formant generated and can be modified by setting things such as speed, pitch, mouth and throat configuration, and even sending in phonetic codes instead of English text.  See @s-macke's repository for more information.
 

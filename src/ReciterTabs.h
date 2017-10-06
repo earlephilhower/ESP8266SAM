@@ -2,6 +2,10 @@
 #define RECITERTABS_H
 
 #include <pgmspace.h>
+#include "debug.h"
+#if debug
+  #define PROGMEM
+#endif
 
 //some flags
 unsigned char tab36376[] PROGMEM  =

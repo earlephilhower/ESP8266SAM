@@ -22,7 +22,7 @@
 #include "reciter.h"
 #include "sam.h"
 
-
+// Thunk from C to C++ with a this-> pointer
 void ESP8266SAM::OutputByteCallback(void *cbdata, unsigned char b)
 {
   ESP8266SAM *sam = static_cast<ESP8266SAM*>(cbdata);
@@ -32,7 +32,7 @@ void ESP8266SAM::OutputByteCallback(void *cbdata, unsigned char b)
 void ESP8266SAM::OutputByte(unsigned char b)
 {
   // Xvert unsigned 8 to signed 16...
-  int16_t s16 = b; s16 -= 128; s16 *= 128;
+  int16_t s16 = b;// s16 -= 128; //s16 *= 128;
   int16_t sample[2];
   sample[0] = s16;
   sample[1] = s16;
@@ -45,8 +45,8 @@ void ESP8266SAM::Say(AudioOutput *out, const char *str)
   
   // These are fixed by the synthesis routines
   out->SetRate(22050);
-  out->SetBitsPerSample(16); // Actually, it's 4-bits(!!), but we're not a SID chip...
-  out->SetChannels(2); // Again, not really
+  out->SetBitsPerSample(8);
+  out->SetChannels(1);
   out->begin();
 
   // SAM settings

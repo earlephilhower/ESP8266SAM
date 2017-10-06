@@ -5,7 +5,7 @@
 #include "render.h"
 #include "RenderTabs.h"
 
-//#include "debug.h"
+#include "debug.h"
 //extern int debug;
 #include <pgmspace.h>
 
@@ -55,7 +55,7 @@ extern int bufferpos;
 
 
 //timetable for more accurate c64 simulation
-unsigned char timetable[5][5] =
+const unsigned char timetable[5][5] PROGMEM =
 {
 	{162, 167, 167, 127, 128},
 	{226, 60, 60, 0, 0},
@@ -66,27 +66,26 @@ unsigned char timetable[5][5] =
 
 extern void (*outcb)(void *, unsigned char);
 extern void *outcbdata;
-
-void Output(int index, unsigned char A)
+static unsigned char oldtimetableindex = 0;
+static unsigned char lastAry[5];
+void Output8BitAry(int index, unsigned char ary[5])
 {
-	static unsigned oldtimetableindex = 0;
-	//int k;
-//static FILE *raw = NULL;
-//if (!raw) raw = fopen("raw.bin", "wb");
-static unsigned char lastA = 0;
-int newbufferpos =  bufferpos + timetable[oldtimetableindex][index];
-int bp0 = bufferpos / 50;
-int bp1 = newbufferpos / 50;
-for (int i=bp0; i<bp1; i++) outcb(outcbdata, (lastA&15)*16); //fputc((lastA&15)*16, raw);
-lastA = A;
-	bufferpos += timetable[oldtimetableindex][index];
+	int newbufferpos =  bufferpos + pgm_read_byte(&timetable[oldtimetableindex][index]);
+	int bp0 = bufferpos / 50;
+	int bp1 = newbufferpos / 50;
+	int k=0;
+	for (int i=bp0; i<bp1; i++, k++) outcb(outcbdata, lastAry[k]);
+	memcpy(lastAry, ary, 5);
+	bufferpos = newbufferpos;
 	oldtimetableindex = index;
-/*
-	// write a little bit in advance
-	for(k=0; k<5; k++)
-		buffer[bufferpos/50 + k] = (A & 15)*16;
-*/
 }
+void Output8Bit(int index, unsigned char A)
+{
+	unsigned char ary[5] = {A,A,A,A,A};
+	Output8BitAry(index, ary);
+}
+
+
 
 
 
@@ -253,13 +252,13 @@ pos48280:
 		X = mem53;
 		//mem[54296] = X;
         // output the byte
-		Output(1, X);
+		Output8Bit(1, (X&0xf)*16);
 		// if X != 0, exit loop
 		if(X != 0) goto pos48296;
 	}
 
 	// output a 5 for the on bit
-	Output(2, 5);
+	Output8Bit(2, 5*16);
 
 	//48295: NOP
 pos48296:
@@ -316,13 +315,13 @@ pos48315:
 			{
                 // if bit set, output 26
 				X = 26;
-				Output(3, X);
+				Output8Bit(3, (X&0xf)*16);
 			} else
 			{
 				//timetable 4
 				// bit is not set, output a 6
 				X=6;
-				Output(4, X);
+				Output8Bit(4, (X&0xf)*16);
 			}
 
 			mem56--;
@@ -367,13 +366,13 @@ pos48315:
 void Render()
 {
 	unsigned char phase1 = 0;  //mem43
-	unsigned char phase2;
-	unsigned char phase3;
-	unsigned char mem66;
-	unsigned char mem38;
-	unsigned char mem40;
-	unsigned char speedcounter; //mem45
-	unsigned char mem48;
+	unsigned char phase2 = 0;
+	unsigned char phase3 = 0;
+	unsigned char mem66 = 0;
+	unsigned char mem38 = 0;
+	unsigned char mem40 = 0;
+	unsigned char speedcounter = 0; //mem45
+	unsigned char mem48 = 0;
 	int i;
 	if (phonemeIndexOutput[0] == 255) return; //exit if no data
 
@@ -449,6 +448,10 @@ do
 	mem44++;
 } while(mem44 != 0);
 yield();
+if (debug)
+{
+        PrintOutput(sampledConsonantFlag, frequency1, frequency2, frequency3, amplitude1, amplitude2, amplitude3, pitches);
+}
 // -------------------
 //pos47694:
 
@@ -687,10 +690,11 @@ yield();
 			// ML : Code47503 is division with remainder, and mem50 gets the sign
 
 			// calculate change per frame
-			mem50 = (((char)(mem53) < 0) ? 128 : 0);
-			mem51 = abs((char)mem53) % mem40;
-			mem53 = (unsigned char)((char)(mem53) / mem40);
-
+			signed char m53 = (signed char)mem53;
+			mem50 = mem53 & 128;
+			unsigned char m53abs = abs(m53);
+			mem51 = m53abs % mem40; //abs((char)m53) % mem40;
+			mem53 = (unsigned char)((signed char)(m53) / mem40);
             // interpolation range
 			X = mem40; // number of frames to interpolate over
 			Y = phase3; // starting frame
@@ -785,6 +789,10 @@ yield();
 	X = A;
 	mem38 = A - (A>>2);     // 3/4*A ???
 yield();
+if (debug)
+{
+        PrintOutput(sampledConsonantFlag, frequency1, frequency2, frequency3, amplitude1, amplitude2, amplitude3, pitches);
+}
 
 // PROCESS THE FRAMES
 //
@@ -816,18 +824,28 @@ yield();
 		} else
 		{
             // simulate the glottal pulse and formants
-			signed char sp1 = (signed char)pgm_read_byte(&sinus[phase1]);
-			signed char sp2 = (signed char)pgm_read_byte(&sinus[phase2]);
-			signed char rp3 = (signed char)pgm_read_byte(&rectangle[phase3]);
-			signed int sin1 = sp1 * ((unsigned char)amplitude1[Y] & 0x0f);
-			signed int sin2 = sp2 * ((unsigned char)amplitude2[Y] & 0x0f);
-			signed int rect = rp3 * ((unsigned char)amplitude3[Y] & 0x0f);
-			signed int mux = sin1 + sin2 + rect;
-			mux /= 32;
-			mux += 128; // Go from signed to unsigned amplitude
-			A = (mux>>4) & 0x0f;
+			unsigned char ary[5];
+			unsigned int p1 = phase1 * 256; // Fixed point integers because we need to divide later on
+			unsigned int p2 = phase2 * 256;
+			unsigned int p3 = phase3 * 256;
+
+			for (int k=0; k<5; k++) {
+				signed char sp1 = (signed char)pgm_read_byte(&sinus[0xff & (p1>>8)]);
+				signed char sp2 = (signed char)pgm_read_byte(&sinus[0xff & (p2>>8)]);
+				signed char rp3 = (signed char)pgm_read_byte(&rectangle[0xff & (p3>>8)]);
+				signed int sin1 = sp1 * ((unsigned char)amplitude1[Y] & 0x0f);
+				signed int sin2 = sp2 * ((unsigned char)amplitude2[Y] & 0x0f);
+				signed int rect = rp3 * ((unsigned char)amplitude3[Y] & 0x0f);
+				signed int mux = sin1 + sin2 + rect;
+				mux /= 32;
+				mux += 128; // Go from signed to unsigned amplitude
+				ary[k] = mux;
+				p1 += ((int)frequency1[Y]) * 256 / 4; // Compromise, this becomes a shift and works well
+				p2 += ((int)frequency2[Y]) * 256 / 4;
+				p3 += ((int)frequency3[Y]) * 256 / 4;
+			}
 			// output the accumulated value
-			Output(0, A);
+			Output8BitAry(0, ary);
 			speedcounter--;
 			if (speedcounter != 0) goto pos48155;
 			Y++; //go to next amplitude
