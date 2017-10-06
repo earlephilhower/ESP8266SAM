@@ -166,7 +166,7 @@ pos36677:
 
 	// go to the right rules for this character.
 	X = mem64 - 'A';
-	mem62 = tab37489[X] | (tab37515[X]<<8);
+	mem62 = pgm_read_byte(&tab37489[X]) | (pgm_read_byte(&tab37515[X])<<8);
 
 	// -------------------------------------
 	// go to next rule

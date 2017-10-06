@@ -91,7 +91,7 @@ const unsigned char inBlendLength[] PROGMEM =
 // 67: **    27          00011011
 // 70: **    25          00011001
 // tab45936
-unsigned char sampledConsonantFlags[] =
+const unsigned char sampledConsonantFlags[] PROGMEM =
 {
     0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
     0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
@@ -151,7 +151,7 @@ unsigned char freq3data[]=
 	0x65 , 0x65 , 0x70 , 0x5E , 0x5E , 0x5E , 0x08 , 0x01
 };
 
-unsigned char ampl1data[] =
+const unsigned char ampl1data[] PROGMEM =
 {
 	0 , 0 , 0 , 0 , 0 ,0xD ,0xD ,0xE ,
 	0xF ,0xF ,0xF ,0xF ,0xF ,0xC ,0xD ,0xC ,
@@ -165,7 +165,7 @@ unsigned char ampl1data[] =
 	0 ,0xC , 0 , 0 , 0 , 0 ,0xF ,0xF
 };
 
-unsigned char ampl2data[] =
+const unsigned char ampl2data[] PROGMEM =
 {
 	0 , 0 , 0 , 0 , 0 ,0xA ,0xB ,0xD ,
 	0xE ,0xD ,0xC ,0xC ,0xB , 9 ,0xB ,0xB ,
@@ -179,7 +179,7 @@ unsigned char ampl2data[] =
 	0 ,0xA , 0 , 0 ,0xA , 0 , 0 , 0
 };
 
-unsigned char ampl3data[] =
+const unsigned char ampl3data[] PROGMEM =
 {
 	0 , 0 , 0 , 0 , 0 , 8 , 7 , 8 ,
 	8 , 1 , 1 , 0 , 1 , 0 , 7 , 5 ,

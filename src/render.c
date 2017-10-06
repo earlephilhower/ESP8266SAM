@@ -437,10 +437,10 @@ do
 		frequency1[X] = freq1data[Y];     // F1 frequency
 		frequency2[X] = freq2data[Y];     // F2 frequency
 		frequency3[X] = freq3data[Y];     // F3 frequency
-		amplitude1[X] = ampl1data[Y];     // F1 amplitude
-		amplitude2[X] = ampl2data[Y];     // F2 amplitude
-		amplitude3[X] = ampl3data[Y];     // F3 amplitude
-		sampledConsonantFlag[X] = sampledConsonantFlags[Y];        // phoneme data for sampled consonants
+		amplitude1[X] = pgm_read_byte(&ampl1data[Y]);     // F1 amplitude
+		amplitude2[X] = pgm_read_byte(&ampl2data[Y]);     // F2 amplitude
+		amplitude3[X] = pgm_read_byte(&ampl3data[Y]);     // F3 amplitude
+		sampledConsonantFlag[X] = pgm_read_byte(&sampledConsonantFlags[Y]);        // phoneme data for sampled consonants
 		pitches[X] = pitch + phase1;      // pitch
 		X++;
 		phase2--;

@@ -3,19 +3,18 @@
 
 #include <pgmspace.h>
 #include "debug.h"
-#include "debug.h"
 #if debug
   #define PROGMEM
 #endif
 
 //tab40672
-unsigned char stressInputTable[] PROGMEM =
+const unsigned char stressInputTable[] PROGMEM =
 {
 	'*', '1', '2', '3', '4', '5', '6', '7', '8'
 };
 
 //tab40682
-unsigned char signInputTable1[] PROGMEM =
+const unsigned char signInputTable1[] PROGMEM =
 {
 	' ', '.', '?', ',', '-', 'I', 'I', 'E',
 	'A', 'A', 'A', 'A', 'U', 'A', 'I', 'E',
@@ -31,7 +30,7 @@ unsigned char signInputTable1[] PROGMEM =
 };
 
 //tab40763
-unsigned char signInputTable2[] PROGMEM =
+const unsigned char signInputTable2[] PROGMEM =
 {
 	'*', '*', '*', '*', '*', 'Y', 'H', 'H',
 	'E', 'A', 'H', 'O', 'H', 'X', 'X', 'R',
@@ -47,7 +46,7 @@ unsigned char signInputTable2[] PROGMEM =
 };
 
 //loc_9F8C
-unsigned char flags[]={
+const unsigned char flags[]={
 	0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0xA4 , 0xA4 , 0xA4 ,
 	0xA4 , 0xA4 , 0xA4 , 0x84 , 0x84 , 0xA4 , 0xA4 , 0x84 ,
 	0x84 , 0x84 , 0x84 , 0x84 , 0x84 , 0x84 , 0x44 , 0x44 ,
@@ -65,7 +64,7 @@ unsigned char flags[]={
 
 //??? flags overlap flags2
 //loc_9FDA
-unsigned char flags2[] =
+const unsigned char flags2[] =
 {
 	0x80 , 0xC1 , 0xC1 , 0xC1 , 0xC1 , 0x00 , 0x00 , 0x00 ,
 	0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 , 0x00 ,
@@ -82,7 +81,7 @@ unsigned char flags2[] =
 
 
 //tab45616???
-unsigned char phonemeStressedLengthTable[] =
+const unsigned char phonemeStressedLengthTable[] PROGMEM =
 {
 	0x00 , 0x12 , 0x12 , 0x12 , 8 ,0xB , 9 ,0xB ,
 	0xE ,0xF ,0xB , 0x10 ,0xC , 6 , 6 ,0xE ,
@@ -97,7 +96,7 @@ unsigned char phonemeStressedLengthTable[] =
 };
 
 //tab45536???
-unsigned char phonemeLengthTable[] =
+const unsigned char phonemeLengthTable[] PROGMEM =
 {
 	0 , 0x12 , 0x12 , 0x12 , 8 , 8 , 8 , 8 ,
 	8 ,0xB , 6 ,0xC ,0xA , 5 , 5 ,0xB ,

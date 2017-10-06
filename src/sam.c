@@ -566,10 +566,10 @@ void SetPhonemeLength()
 		//41218: BMI 41229
 		if ((A == 0) || ((A&128) != 0))
 		{
-			phonemeLength[position] = phonemeLengthTable[phonemeindex[position]];
+			phonemeLength[position] = pgm_read_byte(&phonemeLengthTable[phonemeindex[position]]);
 		} else
 		{
-			phonemeLength[position] = phonemeStressedLengthTable[phonemeindex[position]];
+			phonemeLength[position] = pgm_read_byte(&phonemeStressedLengthTable[phonemeindex[position]]);
 		}
 		position++;
 	}
@@ -592,8 +592,8 @@ void Code41240()
 		} else
 		if ((flags[index]&1) == 0)
 		{
-			Insert(pos+1, index+1, phonemeLengthTable[index+1], stress[pos]);
-			Insert(pos+2, index+2, phonemeLengthTable[index+2], stress[pos]);
+			Insert(pos+1, index+1, pgm_read_byte(&phonemeLengthTable[index+1]), stress[pos]);
+			Insert(pos+2, index+2, pgm_read_byte(&phonemeLengthTable[index+2]), stress[pos]);
 			pos += 3;
 			continue;
 		}
@@ -610,8 +610,8 @@ void Code41240()
 			if ((A == 36) || (A == 37)) {pos++; continue;} // '/H' '/X'
 		}
 
-		Insert(pos+1, index+1, phonemeLengthTable[index+1], stress[pos]);
-		Insert(pos+2, index+2, phonemeLengthTable[index+2], stress[pos]);
+		Insert(pos+1, index+1, pgm_read_byte(&phonemeLengthTable[index+1]), stress[pos]);
+		Insert(pos+2, index+2, pgm_read_byte(&phonemeLengthTable[index+2]), stress[pos]);
 		pos += 3;
 	};
 
