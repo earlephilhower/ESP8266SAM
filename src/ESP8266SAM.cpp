@@ -51,10 +51,10 @@ void ESP8266SAM::Say(AudioOutput *out, const char *str)
 
   // SAM settings
   EnableSingmode(singmode);
-  if (speed) SetSpeed(speed);
-  if (pitch) SetPitch(pitch);
-  if (mouth) SetMouth(mouth);
-  if (throat) SetThroat(throat);
+  if (speed) ::SetSpeed(speed);
+  if (pitch) ::SetPitch(pitch);
+  if (mouth) ::SetMouth(mouth);
+  if (throat) ::SetThroat(throat);
 
   // Input massaging
   char input[256];
