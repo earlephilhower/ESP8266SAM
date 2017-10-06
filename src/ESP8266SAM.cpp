@@ -41,7 +41,7 @@ void ESP8266SAM::OutputByte(unsigned char b)
   
 void ESP8266SAM::Say(AudioOutput *out, const char *str)
 {
-  if (!str || strlen(str)>255) return; // Only can speak up to 1 page worth of data...
+  if (!str || strlen(str)>254) return; // Only can speak up to 1 page worth of data...
   
   // These are fixed by the synthesis routines
   out->SetRate(22050);
@@ -58,15 +58,15 @@ void ESP8266SAM::Say(AudioOutput *out, const char *str)
 
   // Input massaging
   char input[256];
-  for (int i=0; input[i] != 0; i++)
+  for (int i=0; str[i]; i++)
     input[i] = toupper((int)str[i]);
   input[strlen(str)] = 0;
 
   // To phonemes
   if (phonetic) {
-    strncat(input, "\x9b", 256);
+    strncat(input, "\x9b", 255);
   } else {
-    strncat(input, "[", 256);
+    strncat(input, "[", 255);
     if (!TextToPhonemes(input)) return; // ERROR
   }
 
