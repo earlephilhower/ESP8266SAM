@@ -38,7 +38,10 @@ public:
   ~ESP8266SAM()
   {
   }
-  
+
+  enum SAMVoice { VOICE_SAM, VOICE_ELF, VOICE_ROBOT, VOICE_STUFFY, VOICE_OLDLADY, VOICE_ET };
+  void SetVoice(enum SAMVoice voice);
+
   void SetSingMode(bool val) { singmode = val; }
   void SetPhonetic(bool val) { phonetic = val; }
   void SetPitch(uint8_t val) { pitch = val; }
