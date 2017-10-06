@@ -956,6 +956,25 @@ pos48406:
     mouth formant (F1) and the throat formant (F2). Only the voiced
     phonemes (5-29 and 48-53) are altered.
 */
+// mouth formants (F1) 5..29
+const unsigned char mouthFormants5_29[30] PROGMEM = {
+                0, 0, 0, 0, 0, 10,
+                14, 19, 24, 27, 23, 21, 16, 20, 14, 18, 14, 18, 18,
+                16, 13, 15, 11, 18, 14, 11, 9, 6, 6, 6};
+
+// throat formants (F2) 5..29
+const unsigned char throatFormants5_29[30] PROGMEM = {
+        255, 255,
+        255, 255, 255, 84, 73, 67, 63, 40, 44, 31, 37, 45, 73, 49,
+        36, 30, 51, 37, 29, 69, 24, 50, 30, 24, 83, 46, 54, 86};
+
+        // there must be no zeros in this 2 tables
+        // formant 1 frequencies (mouth) 48..53
+const unsigned char mouthFormants48_53[6] PROGMEM = {19, 27, 21, 27, 18, 13};
+
+        // formant 2 frequencies (throat) 48..53
+const unsigned char throatFormants48_53[6] PROGMEM = {72, 39, 31, 43, 30, 34};
+
 void SetMouthThroat(unsigned char mouth, unsigned char throat)
 {
 	unsigned char initialFrequency;
@@ -963,37 +982,18 @@ void SetMouthThroat(unsigned char mouth, unsigned char throat)
 	//unsigned char mouth; //mem38880
 	//unsigned char throat; //mem38881
 
-	// mouth formants (F1) 5..29
-	unsigned char mouthFormants5_29[30] = {
-		0, 0, 0, 0, 0, 10,
-		14, 19, 24, 27, 23, 21, 16, 20, 14, 18, 14, 18, 18,
-		16, 13, 15, 11, 18, 14, 11, 9, 6, 6, 6};
-
-	// throat formants (F2) 5..29
-	unsigned char throatFormants5_29[30] = {
-	255, 255,
-	255, 255, 255, 84, 73, 67, 63, 40, 44, 31, 37, 45, 73, 49,
-	36, 30, 51, 37, 29, 69, 24, 50, 30, 24, 83, 46, 54, 86};
-
-	// there must be no zeros in this 2 tables
-	// formant 1 frequencies (mouth) 48..53
-	unsigned char mouthFormants48_53[6] = {19, 27, 21, 27, 18, 13};
-
-	// formant 2 frequencies (throat) 48..53
-	unsigned char throatFormants48_53[6] = {72, 39, 31, 43, 30, 34};
-
 	unsigned char pos = 5; //mem39216
 //pos38942:
 	// recalculate formant frequencies 5..29 for the mouth (F1) and throat (F2)
 	while(pos != 30)
 	{
 		// recalculate mouth frequency
-		initialFrequency = mouthFormants5_29[pos];
+		initialFrequency = pgm_read_byte(&mouthFormants5_29[pos]);
 		if (initialFrequency != 0) newFrequency = trans(mouth, initialFrequency);
 		freq1data[pos] = newFrequency;
 
 		// recalculate throat frequency
-		initialFrequency = throatFormants5_29[pos];
+		initialFrequency = pgm_read_byte(&throatFormants5_29[pos]);
 		if(initialFrequency != 0) newFrequency = trans(throat, initialFrequency);
 		freq2data[pos] = newFrequency;
 		pos++;
@@ -1006,12 +1006,12 @@ void SetMouthThroat(unsigned char mouth, unsigned char throat)
     while(pos != 54)
     {
 		// recalculate F1 (mouth formant)
-		initialFrequency = mouthFormants48_53[Y];
+		initialFrequency = pgm_read_byte(&mouthFormants48_53[Y]);
 		newFrequency = trans(mouth, initialFrequency);
 		freq1data[pos] = newFrequency;
 
 		// recalculate F2 (throat formant)
-		initialFrequency = throatFormants48_53[Y];
+		initialFrequency = pgm_read_byte(&throatFormants48_53[Y]);
 		newFrequency = trans(throat, initialFrequency);
 		freq2data[pos] = newFrequency;
 		Y++;
