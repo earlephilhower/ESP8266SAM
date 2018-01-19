@@ -1,6 +1,7 @@
-//#include <stdio.h>
-//#include <string.h>
+#include <stdio.h> // define printf()
+#include <string.h> // strlen()
 //#include <stdlib.h>
+#include <stddef.h> // define NULL
 #include "debug.h"
 #include "sam.h"
 #include "render.h"

@@ -1,6 +1,6 @@
 //#include <stdio.h>
 #include <string.h>
-//#include <stdlib.h>
+#include <stdlib.h> // abs()
 
 #include "render.h"
 #include "RenderTabs.h"
@@ -52,7 +52,9 @@ unsigned char trans(unsigned char mem39212, unsigned char mem39213);
 extern int bufferpos;
 //extern char *buffer;
 
-
+#ifndef ESP8266
+static void yield() { /* NOOP */ }
+#endif
 
 //timetable for more accurate c64 simulation
 const unsigned char timetable[5][5] PROGMEM =
