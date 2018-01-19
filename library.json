@@ -1,7 +1,7 @@
 {
     "name": "ESP8266SAM",
-    "description": "Speech synthesizer SAM ported to ESP8266",
-    "keywords": "ESP8266, Speecn Synthesis, SAM",
+    "description": "Speech synthesizer SAM ported to ESP8266/ESP32",
+    "keywords": "ESP8266, ESP32, Speecn Synthesis, SAM",
     "authors": [
         {
             "name": "Earle F. Philhower, III",
