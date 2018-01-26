@@ -1,12 +1,12 @@
 #include <Arduino.h>
 #include <ESP8266SAM.h>
-#include <AudioOutputI2SDAC.h>
+#include <AudioOutputI2S.h>
 
-AudioOutputI2SDAC *out = NULL;
+AudioOutputI2S *out = NULL;
 
 void setup()
 {
-  out = new AudioOutputI2SDAC();
+  out = new AudioOutputI2S();
   out->begin();
 }
 
