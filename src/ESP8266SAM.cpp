@@ -21,6 +21,11 @@
 
 #include "reciter.h"
 #include "sam.h"
+#include "SamData.h"
+
+#ifdef SAMDATA
+SamData* samdata;
+#endif
 
 // Thunk from C to C++ with a this-> pointer
 void ESP8266SAM::OutputByteCallback(void *cbdata, unsigned char b)
@@ -42,6 +47,14 @@ void ESP8266SAM::OutputByte(unsigned char b)
 void ESP8266SAM::Say(AudioOutput *out, const char *str)
 {
   if (!str || strlen(str)>254) return; // Only can speak up to 1 page worth of data...
+#ifdef SAMDATA
+  samdata = new SamData;
+  if (samdata == nullptr)
+  {
+      // allocation failed!
+      return;
+  }
+#endif
   
   // These are fixed by the synthesis routines
   out->SetRate(22050);
@@ -74,6 +87,9 @@ void ESP8266SAM::Say(AudioOutput *out, const char *str)
   output = out;
   SetInput(input);
   SAMMain(OutputByteCallback, (void*)this);
+#ifdef SAMDATA
+  delete samdata;
+#endif
 }
 
 void ESP8266SAM::SetVoice(enum SAMVoice voice)

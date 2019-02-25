@@ -6,8 +6,13 @@
 #include "sam.h"
 #include "render.h"
 #include "SamTabs.h"
+#include "SamData.h"
 
+#ifdef SAMDATA
+#define input (samdata->sam.input)
+#else
 static char input[256]; //tab39445
+#endif
 //standard sam sound
 unsigned char speed = 72;
 unsigned char pitch = 64;
@@ -30,6 +35,14 @@ unsigned char mem59=0;
 
 static unsigned char A, X, Y;
 
+#ifdef SAMDATA
+#define stress (samdata->sam.stress)
+#define phonemeLength (samdata->sam.phonemeLength)
+#define phonemeindex (samdata->sam.phonemeindex)
+#define phonemeIndexOutput (samdata->sam.phonemeIndexOutput)
+#define stressOutput (samdata->sam.stressOutput)
+#define phonemeLengthOutput (samdata->sam.phonemeLengthOutput)
+#else
 static unsigned char stress[256]; //numbers from 0 to 8
 static unsigned char phonemeLength[256]; //tab40160
 static unsigned char phonemeindex[256];
@@ -37,7 +50,7 @@ static unsigned char phonemeindex[256];
 unsigned char phonemeIndexOutput[60]; //tab47296
 unsigned char stressOutput[60]; //tab47365
 unsigned char phonemeLengthOutput[60]; //tab47416
-
+#endif
 
 
 
