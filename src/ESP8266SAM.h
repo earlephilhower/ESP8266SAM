@@ -49,12 +49,12 @@ public:
   void SetThroat(uint8_t val) { throat = val; }
   void SetSpeed(uint8_t val) { speed = val; }
 
-  void Say(AudioOutput *out, const char *str);
-  void Say_P(AudioOutput *out, const char *str) {
+  bool Say(AudioOutput *out, const char *str);
+  bool Say_P(AudioOutput *out, const char *str) {
     char ram[256];
     strncpy_P(ram, str, 256);
     ram[255] = 0;
-    Say(out, ram);
+    return Say(out, ram);
   };
 
 private:

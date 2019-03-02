@@ -42,14 +42,14 @@ void ESP8266SAM::OutputByte(unsigned char b)
   while (!output->ConsumeSample(sample)) yield();
 }
   
-void ESP8266SAM::Say(AudioOutput *out, const char *str)
+bool ESP8266SAM::Say(AudioOutput *out, const char *str)
 {
-  if (!str || strlen(str)>254) return; // Only can speak up to 1 page worth of data...
+  if (!str || strlen(str)>254) return false; // Only can speak up to 1 page worth of data...
   samdata = new SamData;
   if (samdata == nullptr)
   {
       // allocation failed!
-      return;
+      return false;
   }
   
   // These are fixed by the synthesis routines
@@ -76,7 +76,7 @@ void ESP8266SAM::Say(AudioOutput *out, const char *str)
     strncat(input, "\x9b", 255);
   } else {
     strncat(input, "[", 255);
-    if (!TextToPhonemes(input)) return; // ERROR
+    if (!TextToPhonemes(input)) return false; // ERROR
   }
 
   // Say it!
@@ -84,6 +84,7 @@ void ESP8266SAM::Say(AudioOutput *out, const char *str)
   SetInput(input);
   SAMMain(OutputByteCallback, (void*)this);
   delete samdata;
+  return true;
 }
 
 void ESP8266SAM::SetVoice(enum SAMVoice voice)
