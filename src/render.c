@@ -27,7 +27,6 @@ extern unsigned char speed;
 extern unsigned char pitch;
 extern int singmode;
 
-#ifdef SAMDATA
 #define phonemeIndexOutput (samdata->sam.phonemeIndexOutput)
 #define stressOutput (samdata->sam.stressOutput)
 #define phonemeLengthOutput (samdata->sam.phonemeLengthOutput)
@@ -39,23 +38,6 @@ extern int singmode;
 #define amplitude2 (samdata->render.amplitude2)
 #define amplitude3 (samdata->render.amplitude3)
 #define sampledConsonantFlag (samdata->render.sampledConsonantFlag)
-#else
-extern unsigned char phonemeIndexOutput[60]; //tab47296
-extern unsigned char stressOutput[60]; //tab47365
-extern unsigned char phonemeLengthOutput[60]; //tab47416
-
-unsigned char pitches[256]; // tab43008
-
-unsigned char frequency1[256];
-unsigned char frequency2[256];
-unsigned char frequency3[256];
-
-unsigned char amplitude1[256];
-unsigned char amplitude2[256];
-unsigned char amplitude3[256];
-
-unsigned char sampledConsonantFlag[256]; // tab44800
-#endif
 
 void AddInflection(unsigned char mem48, unsigned char phase1);
 unsigned char trans(unsigned char mem39212, unsigned char mem39213);

@@ -3,11 +3,12 @@
 #include "reciter.h"
 #include "ReciterTabs.h"
 #include "debug.h"
+#include "SamData.h"
 
 unsigned char A, X, Y;
 //extern int debug;
 
-static unsigned char inputtemp[256];   // secure copy of input tab36096
+#define inputtemp (samdata->reciter.inputtemp)
 
 void Code37055(unsigned char mem59)
 {

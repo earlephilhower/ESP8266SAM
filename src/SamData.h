@@ -14,7 +14,6 @@ extern "C" {
 
 #define SAMDATA
 
-#ifdef SAMDATA
 typedef struct s_samdata
 {
     struct render
@@ -28,6 +27,9 @@ typedef struct s_samdata
         unsigned char amplitude3[256];
         unsigned char sampledConsonantFlag[256]; // tab44800
     } render;
+    struct reciter {
+        unsigned char inputtemp[256];
+    } reciter;
     struct sam
     {
         char input[256]; //tab39445
@@ -37,13 +39,10 @@ typedef struct s_samdata
         unsigned char phonemeIndexOutput[60]; //tab47296
         unsigned char stressOutput[60]; //tab47365
         unsigned char phonemeLengthOutput[60]; //tab47416
-
     } sam;
 } SamData;
 
 extern SamData* samdata;
-
-#endif
 
 #ifdef __cplusplus
 }
@@ -51,4 +50,4 @@ extern SamData* samdata;
 
 
 
-#endif /* LIBRARIES_ESP8266SAM_SRC_SAMDATA_H_ */
+#endif /* SAMDATA_H_ */
