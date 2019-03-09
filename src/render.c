@@ -8,6 +8,7 @@
 #include "debug.h"
 //extern int debug;
 #include <pgmspace.h>
+#include "SamData.h"
 
 unsigned char wait1 = 7;
 unsigned char wait2 = 6;
@@ -26,23 +27,17 @@ extern unsigned char speed;
 extern unsigned char pitch;
 extern int singmode;
 
-
-extern unsigned char phonemeIndexOutput[60]; //tab47296
-extern unsigned char stressOutput[60]; //tab47365
-extern unsigned char phonemeLengthOutput[60]; //tab47416
-
-unsigned char pitches[256]; // tab43008
-
-unsigned char frequency1[256];
-unsigned char frequency2[256];
-unsigned char frequency3[256];
-
-unsigned char amplitude1[256];
-unsigned char amplitude2[256];
-unsigned char amplitude3[256];
-
-unsigned char sampledConsonantFlag[256]; // tab44800
-
+#define phonemeIndexOutput (samdata->sam.phonemeIndexOutput)
+#define stressOutput (samdata->sam.stressOutput)
+#define phonemeLengthOutput (samdata->sam.phonemeLengthOutput)
+#define pitches    (samdata->render.pitches)
+#define frequency1 (samdata->render.frequency1)
+#define frequency2 (samdata->render.frequency2)
+#define frequency3 (samdata->render.frequency3)
+#define amplitude1 (samdata->render.amplitude1)
+#define amplitude2 (samdata->render.amplitude2)
+#define amplitude3 (samdata->render.amplitude3)
+#define sampledConsonantFlag (samdata->render.sampledConsonantFlag)
 
 void AddInflection(unsigned char mem48, unsigned char phase1);
 unsigned char trans(unsigned char mem39212, unsigned char mem39213);
