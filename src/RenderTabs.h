@@ -2,8 +2,8 @@
 #define RENDERTABS_H
 
 #include <pgmspace.h>
-#include "debug.h"
-#if debug
+#include "esp8266sam_debug.h"
+#if DEBUG_ESP8266SAM_LIB
   #define PROGMEM
 #endif
 
