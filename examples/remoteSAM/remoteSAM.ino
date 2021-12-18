@@ -3,6 +3,10 @@
 
 #include <Arduino.h>
 
+#if !defined(ESP8266)
+#error This example is only for the ESP8266
+#endif
+
 #include <ESP8266SAM.h>
 #include "AudioOutputI2SNoDAC.h"
 
