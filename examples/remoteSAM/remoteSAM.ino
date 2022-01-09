@@ -4,8 +4,14 @@
 #include <Arduino.h>
 
 #if !defined(ESP8266)
-#error This example is only for the ESP8266
-#endif
+void setup() {
+  Serial.begin(115200);
+  Serial.println("This example is only for the ESP8266");
+}
+
+void loop() {
+}
+#else
 
 #include <ESP8266SAM.h>
 #include "AudioOutputI2SNoDAC.h"
@@ -14,14 +20,15 @@
 #include <ESP8266NetBIOS.h>
 #include <ESP8266SSDP.h> //Library for SSDP (Show ESP in Network on Windows)
 #include <ESP8266WebServer.h> //Library for WebServer
-#include <WiFiManager.h>
+#include <ESP8266WiFi.h>
 #include <uri/UriBraces.h>
 
 AudioOutputI2SNoDAC *out = NULL;
 
 ESP8266WebServer server(80); //Web Server on port 80
-WiFiManager wifiManager;
 const char* NAME = "SAM";
+const char *ssid = STASSID;
+const char *pass = STAPSK;
 
 void setup()
 {
@@ -29,7 +36,18 @@ void setup()
   out = new AudioOutputI2SNoDAC();
   out->begin();
 
-  wifiManager.autoConnect(NAME);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, pass);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
 
   MDNS.begin(NAME);
   MDNS.addService("http", "tcp", 80);
@@ -127,3 +145,5 @@ String urldecode(String str)
 
   return encodedString;
 }
+
+#endif
