@@ -27,8 +27,8 @@ AudioOutputI2SNoDAC *out = NULL;
 
 ESP8266WebServer server(80); //Web Server on port 80
 const char* NAME = "SAM";
-const char *ssid = STASSID;
-const char *pass = STAPSK;
+const char *ssid = "<fillmein>";
+const char *pass = "<fillmein>;
 
 void setup()
 {
