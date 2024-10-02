@@ -1,14 +1,14 @@
 #ifndef RECITERTABS_H
 #define RECITERTABS_H
 
-#include <pgmspace.h>
+// #include <pgmspace.h>
 #include "esp8266sam_debug.h"
 #if DEBUG_ESP8266SAM_LIB
   #define PROGMEM
 #endif
 
 //some flags
-const unsigned char tab36376[] PROGMEM  =
+const unsigned char tab36376[]   =
 {
 	0, 0, 0, 0, 0, 0, 0, 0, // 0-7
 	0, 0, 0, 0, 0, 0, 0, 0, // 8-15
@@ -26,7 +26,7 @@ const unsigned char tab36376[] PROGMEM  =
 	163, 76, 138, 142
 };
 
-const char rules[] PROGMEM =
+const char rules[]  =
 {
 ']','A'|0x80,
 ' ','(','A','.',')',                    '=','E','H','4','Y','.',' '|0x80,
@@ -484,7 +484,7 @@ const char rules[] PROGMEM =
 'j'|0x80
 };
 
-const char rules2[] PROGMEM =
+const char rules2[]  =
 {
 '(','A',')',                            '='|0x80,
 '(','!',')',                            '=','.'|0x80,
@@ -533,7 +533,7 @@ const char rules2[] PROGMEM =
 
 //26 items. From 'A' to 'Z'
 // positions for mem62 and mem63 for each character
-const unsigned char tab37489[] PROGMEM =
+const unsigned char tab37489[]  =
 {
 0, 149, 247, 162, 57, 197, 6, 126,
 199, 38, 55, 78, 145, 241, 85, 161,
@@ -541,7 +541,7 @@ const unsigned char tab37489[] PROGMEM =
 71, 218
 };
 
-const unsigned char tab37515[] PROGMEM =
+const unsigned char tab37515[]  =
 {
 125, 126, 126, 127, 128, 129, 130, 130,
 130, 132, 132, 132, 132, 132, 133, 135,
