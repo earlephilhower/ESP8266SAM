@@ -1,20 +1,19 @@
 #ifndef SAMTABS_H
 #define SAMTABS_H
 
-#include <pgmspace.h>
 #include "esp8266sam_debug.h"
 #if DEBUG_ESP8266SAM_LIB
   #define PROGMEM
 #endif
 
 //tab40672
-const unsigned char stressInputTable[] PROGMEM =
+const unsigned char stressInputTable[]  =
 {
 	'*', '1', '2', '3', '4', '5', '6', '7', '8'
 };
 
 //tab40682
-const unsigned char signInputTable1[] PROGMEM =
+const unsigned char signInputTable1[]  =
 {
 	' ', '.', '?', ',', '-', 'I', 'I', 'E',
 	'A', 'A', 'A', 'A', 'U', 'A', 'I', 'E',
@@ -30,7 +29,7 @@ const unsigned char signInputTable1[] PROGMEM =
 };
 
 //tab40763
-const unsigned char signInputTable2[] PROGMEM =
+const unsigned char signInputTable2[]  =
 {
 	'*', '*', '*', '*', '*', 'Y', 'H', 'H',
 	'E', 'A', 'H', 'O', 'H', 'X', 'X', 'R',
@@ -81,7 +80,7 @@ const unsigned char flags2[] =
 
 
 //tab45616???
-const unsigned char phonemeStressedLengthTable[] PROGMEM =
+const unsigned char phonemeStressedLengthTable[]  =
 {
 	0x00 , 0x12 , 0x12 , 0x12 , 8 ,0xB , 9 ,0xB ,
 	0xE ,0xF ,0xB , 0x10 ,0xC , 6 , 6 ,0xE ,
@@ -96,7 +95,7 @@ const unsigned char phonemeStressedLengthTable[] PROGMEM =
 };
 
 //tab45536???
-const unsigned char phonemeLengthTable[] PROGMEM =
+const unsigned char phonemeLengthTable[]  =
 {
 	0 , 0x12 , 0x12 , 0x12 , 8 , 8 , 8 , 8 ,
 	8 ,0xB , 6 ,0xC ,0xA , 5 , 5 ,0xB ,

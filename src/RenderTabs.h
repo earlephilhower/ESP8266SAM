@@ -1,22 +1,21 @@
 #ifndef RENDERTABS_H
 #define RENDERTABS_H
 
-#include <pgmspace.h>
 #include "esp8266sam_debug.h"
 #if DEBUG_ESP8266SAM_LIB
   #define PROGMEM
 #endif
 
-const unsigned char tab48426[5] PROGMEM = { 0x18, 0x1A, 0x17, 0x17, 0x17 };
+const unsigned char tab48426[5]  = { 0x18, 0x1A, 0x17, 0x17, 0x17 };
 
-const unsigned char tab47492[] PROGMEM =
+const unsigned char tab47492[]  =
 {
 	0 , 0 , 0xE0 , 0xE6 , 0xEC , 0xF3 , 0xF9 , 0 ,
 	6 , 0xC , 6
 };
 
 
-const unsigned char amplitudeRescale[] PROGMEM =
+const unsigned char amplitudeRescale[]  =
 {
 	0 , 1 , 2 , 2 , 2 , 3 , 3 , 4 ,
 	4 , 5 , 6 , 8 , 9 ,0xB ,0xD ,0xF, 0  //17 elements?
@@ -24,7 +23,7 @@ const unsigned char amplitudeRescale[] PROGMEM =
 
 // Used to decide which phoneme's blend lengths. The candidate with the lower score is selected.
 // tab45856
-const unsigned char blendRank[] PROGMEM =
+const unsigned char blendRank[]  =
 {
 	0 , 0x1F , 0x1F , 0x1F , 0x1F , 2 , 2 , 2 ,
 	2 , 2 , 2 , 2 , 2 , 2 , 5 , 5 ,
@@ -41,7 +40,7 @@ const unsigned char blendRank[] PROGMEM =
 
 // Number of frames at the end of a phoneme devoted to interpolating to next phoneme's final value
 //tab45696
-const unsigned char outBlendLength[] PROGMEM =
+const unsigned char outBlendLength[]  =
 {
 	0 , 2 , 2 , 2 , 2 , 4 , 4 , 4 ,
 	4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 ,
@@ -58,7 +57,7 @@ const unsigned char outBlendLength[] PROGMEM =
 
 // Number of frames at beginning of a phoneme devoted to interpolating to phoneme's final value
 // tab45776
-const unsigned char inBlendLength[] PROGMEM =
+const unsigned char inBlendLength[]  =
 {
 	0 , 2 , 2 , 2 , 2 , 4 , 4 , 4 ,
 	4 , 4 , 4 , 4 , 4 , 4 , 4 , 4 ,
@@ -91,7 +90,7 @@ const unsigned char inBlendLength[] PROGMEM =
 // 67: **    27          00011011
 // 70: **    25          00011001
 // tab45936
-const unsigned char sampledConsonantFlags[] PROGMEM =
+const unsigned char sampledConsonantFlags[]  =
 {
     0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
     0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ,
@@ -151,7 +150,7 @@ unsigned char freq3data[]=
 	0x65 , 0x65 , 0x70 , 0x5E , 0x5E , 0x5E , 0x08 , 0x01
 };
 
-const unsigned char ampl1data[] PROGMEM =
+const unsigned char ampl1data[]  =
 {
 	0 , 0 , 0 , 0 , 0 ,0xD ,0xD ,0xE ,
 	0xF ,0xF ,0xF ,0xF ,0xF ,0xC ,0xD ,0xC ,
@@ -165,7 +164,7 @@ const unsigned char ampl1data[] PROGMEM =
 	0 ,0xC , 0 , 0 , 0 , 0 ,0xF ,0xF
 };
 
-const unsigned char ampl2data[] PROGMEM =
+const unsigned char ampl2data[]  =
 {
 	0 , 0 , 0 , 0 , 0 ,0xA ,0xB ,0xD ,
 	0xE ,0xD ,0xC ,0xC ,0xB , 9 ,0xB ,0xB ,
@@ -179,7 +178,7 @@ const unsigned char ampl2data[] PROGMEM =
 	0 ,0xA , 0 , 0 ,0xA , 0 , 0 , 0
 };
 
-const unsigned char ampl3data[] PROGMEM =
+const unsigned char ampl3data[]  =
 {
 	0 , 0 , 0 , 0 , 0 , 8 , 7 , 8 ,
 	8 , 1 , 1 , 0 , 1 , 0 , 7 , 5 ,
@@ -196,10 +195,10 @@ const unsigned char ampl3data[] PROGMEM =
 
 
 //tab42240
-const signed char sinus[256] PROGMEM = {0,3,6,9,12,16,19,22,25,28,31,34,37,40,43,46,49,51,54,57,60,63,65,68,71,73,76,78,81,83,85,88,90,92,94,96,98,100,102,104,106,107,109,111,112,113,115,116,117,118,120,121,122,122,123,124,125,125,126,126,126,127,127,127,127,127,127,127,126,126,126,125,125,124,123,122,122,121,120,118,117,116,115,113,112,111,109,107,106,104,102,100,98,96,94,92,90,88,85,83,81,78,76,73,71,68,65,63,60,57,54,51,49,46,43,40,37,34,31,28,25,22,19,16,12,9,6,3,0,-3,-6,-9,-12,-16,-19,-22,-25,-28,-31,-34,-37,-40,-43,-46,-49,-51,-54,-57,-60,-63,-65,-68,-71,-73,-76,-78,-81,-83,-85,-88,-90,-92,-94,-96,-98,-100,-102,-104,-106,-107,-109,-111,-112,-113,-115,-116,-117,-118,-120,-121,-122,-122,-123,-124,-125,-125,-126,-126,-126,-127,-127,-127,-127,-127,-127,-127,-126,-126,-126,-125,-125,-124,-123,-122,-122,-121,-120,-118,-117,-116,-115,-113,-112,-111,-109,-107,-106,-104,-102,-100,-98,-96,-94,-92,-90,-88,-85,-83,-81,-78,-76,-73,-71,-68,-65,-63,-60,-57,-54,-51,-49,-46,-43,-40,-37,-34,-31,-28,-25,-22,-19,-16,-12,-9,-6,-3}; 
+const signed char sinus[256]  = {0,3,6,9,12,16,19,22,25,28,31,34,37,40,43,46,49,51,54,57,60,63,65,68,71,73,76,78,81,83,85,88,90,92,94,96,98,100,102,104,106,107,109,111,112,113,115,116,117,118,120,121,122,122,123,124,125,125,126,126,126,127,127,127,127,127,127,127,126,126,126,125,125,124,123,122,122,121,120,118,117,116,115,113,112,111,109,107,106,104,102,100,98,96,94,92,90,88,85,83,81,78,76,73,71,68,65,63,60,57,54,51,49,46,43,40,37,34,31,28,25,22,19,16,12,9,6,3,0,-3,-6,-9,-12,-16,-19,-22,-25,-28,-31,-34,-37,-40,-43,-46,-49,-51,-54,-57,-60,-63,-65,-68,-71,-73,-76,-78,-81,-83,-85,-88,-90,-92,-94,-96,-98,-100,-102,-104,-106,-107,-109,-111,-112,-113,-115,-116,-117,-118,-120,-121,-122,-122,-123,-124,-125,-125,-126,-126,-126,-127,-127,-127,-127,-127,-127,-127,-126,-126,-126,-125,-125,-124,-123,-122,-122,-121,-120,-118,-117,-116,-115,-113,-112,-111,-109,-107,-106,-104,-102,-100,-98,-96,-94,-92,-90,-88,-85,-83,-81,-78,-76,-73,-71,-68,-65,-63,-60,-57,-54,-51,-49,-46,-43,-40,-37,-34,-31,-28,-25,-22,-19,-16,-12,-9,-6,-3};
 
 //tab42496
-const unsigned char rectangle[] PROGMEM =
+const unsigned char rectangle[]  =
 {
 	0x90 , 0x90 , 0x90 , 0x90 , 0x90 , 0x90 , 0x90 , 0x90 ,
 	0x90 , 0x90 , 0x90 , 0x90 , 0x90 , 0x90 , 0x90 , 0x90 ,
@@ -238,7 +237,7 @@ const unsigned char rectangle[] PROGMEM =
 
 
 //random data ?
-const unsigned char sampleTable[0x500] PROGMEM =
+const unsigned char sampleTable[0x500]  =
 {
 	//00
 

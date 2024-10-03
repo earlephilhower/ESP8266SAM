@@ -1,7 +1,7 @@
 /*
   ESP8266SAM
   Port of SAM to the ESP8266
-  
+
   Copyright (C) 2017  Earle F. Philhower, III
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -18,13 +18,10 @@
 #ifndef _ESP8266SAM_H
 #define _ESP8266SAM_H
 
-#include <Arduino.h>
-#include <AudioOutput.h>
-
 class ESP8266SAM {
 
 public:
-  ESP8266SAM()
+  ESP8266SAM(bool output_cb(void *cbdata, int16_t* b)) : output_cb(output_cb)
   {
     singmode = false;
     phonetic = false;
@@ -32,9 +29,8 @@ public:
     mouth = 0;
     throat = 0;
     speed = 0;
-    output = NULL;
   };
-  
+
   ~ESP8266SAM()
   {
   }
@@ -49,13 +45,8 @@ public:
   void SetThroat(uint8_t val) { throat = val; }
   void SetSpeed(uint8_t val) { speed = val; }
 
-  bool Say(AudioOutput *out, const char *str);
-  bool Say_P(AudioOutput *out, const char *str) {
-    char ram[256];
-    strncpy_P(ram, str, 256);
-    ram[255] = 0;
-    return Say(out, ram);
-  };
+  bool Say(const char *str);
+  bool(*output_cb)(void *cbdata, int16_t* b);
 
 private:
   static void OutputByteCallback(void *cbdata, unsigned char b);
@@ -66,7 +57,6 @@ private:
   int speed;
   int mouth;
   int throat;
-  AudioOutput *output;
 };
 
 #endif

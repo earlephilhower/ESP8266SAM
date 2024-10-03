@@ -468,13 +468,13 @@ pos41095:
 
          // GET FIRST CHARACTER AT POSITION Y IN signInputTable
          // --> should change name to PhonemeNameTable1
-		A = pgm_read_byte(signInputTable1+Y);//signInputTable1[Y];
+		A = signInputTable1[Y];//signInputTable1[Y];
 
 		// FIRST CHARACTER MATCHES?
 		if (A == sign1)
 		{
            // GET THE CHARACTER FROM THE PhonemeSecondLetterTable
-			A = pgm_read_byte(signInputTable2+Y);//signInputTable2[Y];
+			A = signInputTable2[Y];//signInputTable2[Y];
 			// NOT A SPECIAL AND MATCHES SECOND CHARACTER?
 			if ((A != '*') && (A == sign2))
 			{
@@ -505,10 +505,10 @@ pos41095:
 		Y = 0;
 pos41134:
 // DOES THE PHONEME IN THE TABLE END WITH '*'?
-		if (pgm_read_byte(signInputTable2+Y)/*signInputTable2[Y]*/ == '*')
+		if (signInputTable2[Y]/*signInputTable2[Y]*/ == '*')
 		{
 // DOES THE FIRST CHARACTER MATCH THE FIRST LETTER OF THE PHONEME
-			if (pgm_read_byte(signInputTable1+Y)/*]signInputTable1[Y]*/ == sign1)
+			if (signInputTable1[Y]/*]signInputTable1[Y]*/ == sign1)
 			{
                 // SAVE THE POSITION AND MOVE AHEAD
 				phonemeindex[position] = Y;
@@ -530,7 +530,7 @@ pos41134:
 		Y = 8;
 
        // WALK BACK THROUGH TABLE LOOKING FOR A MATCH
-		while( (sign1 != pgm_read_byte(stressInputTable+Y)/*stressInputTable[Y]*/) && (Y>0))
+		while( (sign1 != stressInputTable[Y]/*stressInputTable[Y]*/) && (Y>0))
 		{
   // DECREMENT INDEX
 			Y--;
@@ -564,10 +564,10 @@ void SetPhonemeLength()
 		//41218: BMI 41229
 		if ((A == 0) || ((A&128) != 0))
 		{
-			phonemeLength[position] = pgm_read_byte(&phonemeLengthTable[phonemeindex[position]]);
+			phonemeLength[position] = phonemeLengthTable[phonemeindex[position]];
 		} else
 		{
-			phonemeLength[position] = pgm_read_byte(&phonemeStressedLengthTable[phonemeindex[position]]);
+			phonemeLength[position] = phonemeStressedLengthTable[phonemeindex[position]];
 		}
 		position++;
 	}
@@ -590,8 +590,8 @@ void Code41240()
 		} else
 		if ((flags[index]&1) == 0)
 		{
-			Insert(pos+1, index+1, pgm_read_byte(&phonemeLengthTable[index+1]), stress[pos]);
-			Insert(pos+2, index+2, pgm_read_byte(&phonemeLengthTable[index+2]), stress[pos]);
+            Insert(pos+1, index+1, phonemeLengthTable[index+1], stress[pos]);
+            Insert(pos+2, index+2, phonemeLengthTable[index+2], stress[pos]);
 			pos += 3;
 			continue;
 		}
@@ -608,8 +608,8 @@ void Code41240()
 			if ((A == 36) || (A == 37)) {pos++; continue;} // '/H' '/X'
 		}
 
-		Insert(pos+1, index+1, pgm_read_byte(&phonemeLengthTable[index+1]), stress[pos]);
-		Insert(pos+2, index+2, pgm_read_byte(&phonemeLengthTable[index+2]), stress[pos]);
+        Insert(pos+1, index+1, phonemeLengthTable[index+1], stress[pos]);
+        Insert(pos+2, index+2, phonemeLengthTable[index+2], stress[pos]);
 		pos += 3;
 	};
 

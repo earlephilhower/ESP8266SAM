@@ -1,7 +1,7 @@
 /*
   ESP8266SAM
   Port of SAM to the ESP8266
-  
+
   Copyright (C) 2017  Earle F. Philhower, III
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -15,13 +15,20 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <stdint.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdio.h>
 
-#include <Arduino.h>
 #include <ESP8266SAM.h>
 
 #include "reciter.h"
 #include "sam.h"
 #include "SamData.h"
+
+#ifndef ESP8266
+static void yield() { /* NOOP */ }
+#endif
 
 SamData* samdata;
 
@@ -35,14 +42,16 @@ void ESP8266SAM::OutputByteCallback(void *cbdata, unsigned char b)
 void ESP8266SAM::OutputByte(unsigned char b)
 {
   // Xvert unsigned 8 to signed 16...
-  int16_t s16 = b;// s16 -= 128; //s16 *= 128;
+  int16_t s16 = b;
+  s16 -= 128;
+  s16 *= 128;
   int16_t sample[2];
   sample[0] = s16;
   sample[1] = s16;
-  while (!output->ConsumeSample(sample)) yield();
+  while (!output_cb((void*)(0), sample)) yield();
 }
-  
-bool ESP8266SAM::Say(AudioOutput *out, const char *str)
+
+bool ESP8266SAM::Say(const char *str)
 {
   if (!str || strlen(str)>254) return false; // Only can speak up to 1 page worth of data...
   samdata = new SamData;
@@ -51,12 +60,6 @@ bool ESP8266SAM::Say(AudioOutput *out, const char *str)
       // allocation failed!
       return false;
   }
-  
-  // These are fixed by the synthesis routines
-  out->SetRate(22050);
-  out->SetBitsPerSample(8);
-  out->SetChannels(1);
-  out->begin();
 
   // SAM settings
   EnableSingmode(singmode);
@@ -80,7 +83,6 @@ bool ESP8266SAM::Say(AudioOutput *out, const char *str)
   }
 
   // Say it!
-  output = out;
   SetInput(input);
   SAMMain(OutputByteCallback, (void*)this);
   delete samdata;
