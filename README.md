@@ -26,6 +26,7 @@ The voice is formant generated and can be modified by setting things such as spe
 ## Cool uses of SAM
 Jan Derogee has used ESP8266SAM to build a complete VIC-20 compatible speech synthesis cartridge that works with BASIC applications.  It also has a great background on early speech synthesis and a neat construction and demo video.  Check it out at https://janderogee.com/projects/SerialSpeechSynthesisSAM/SerialSpeechSynthesisSAM.htm
 
+Ken McMullan has used an ESP8266 to create a type of MODEM allowing the control of a set of Internet of Things (IoT) devices around his home from a Ham Radio transmitter. ESP8266SAM is employed to give feedback. For example, it is possible to query the temperature around the house, or in the garden, or switch on/off various lights, and teh response comes from the inimitable Speak and Spell voice! Take a look at: https://github.com/KDMcMullan/HaMQTT .
 
 ## License
 While the ESP8266 wrapper is my own, the SAM software is a reverse-engineered version of a software published more than 34 years ago by "Don't ask Software".
