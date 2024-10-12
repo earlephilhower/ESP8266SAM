@@ -12,7 +12,6 @@
 #include "freertos/task.h"
 #include "esp_system.h"
 #include "esp_spi_flash.h"
-#include "audio_example_file.h"
 #include <ESP8266SAM.h>
 
 extern "C" {
