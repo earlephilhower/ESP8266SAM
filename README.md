@@ -7,6 +7,10 @@ This is a port, wrapper, and update of the reverse-engineered speech synthesizer
 
 This version has been reworked to generate full 8-bit speech formants as well as proper time-series waveforms.
 
+## ESP32 and Raspberry Pi Pico RP2040 and Pico 2 RP2350 Note
+
+Consider using [BackgroundAudio](https://github.com/earlephilhower/BackgroundAudio) instead which uses `espeak-ng` to produce higher quality speech, in the background while your sketch does other things.  (Unfortunately, Espeak-NG needs more memory then the ESP8266 has available.)
+
 ## Usage
 You will need:
 1. The ESP8266Audio library installed in your Arduino/libraries folder ( git clone https://github.com/earlephilhower/ESP8266Audio )
